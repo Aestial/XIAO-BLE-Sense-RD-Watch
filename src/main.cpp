@@ -1,18 +1,27 @@
-#include <Arduino.h>
+#include "TFT_Clock.h"
 
-// put function declarations here:
-int myFunction(int, int);
+void setup(void)
+{
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  init_rtc();
+  Serial.begin(115200);
+  lv_xiao_touch_init();
+  draw_clock();
+
+  if (SD.begin(chipSelect))
+  {
+    SDstatus = 1;
+    return;
+  }
+  else
+  {
+    Serial.println("SD card not inserted or initialization failed!");
+  }
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void loop()
+{
+  sdstatus();
+  draw_clock_time();
+  get_touch();
 }
