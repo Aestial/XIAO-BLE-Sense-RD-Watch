@@ -2,8 +2,6 @@
 
 void setup(void)
 {
-
-  init_rtc();
   Serial.begin(115200);
   lv_xiao_touch_init();
   draw_clock();
